@@ -5,16 +5,20 @@ import { UpdateDogDto } from './dto/update-dog.dto';
 
 @Controller('dogs')
 export class DogsController {
-  constructor(private readonly dogsService: DogsService) {}
+  constructor(private readonly dogsService: DogsService) { }
 
   @Post()
-  create(@Body() createDogDto: CreateDogDto) {
+  async create(@Body() createDogDto: CreateDogDto) {
+    // Forced delay
+    await new Promise((r) => setTimeout(r, 1000));
     return this.dogsService.create(createDogDto);
   }
 
-  @Get()
-  findAll() {
-    return this.dogsService.findAll();
+  @Get(':take/:page')
+  async findAll(@Param('take') take: number, @Param('page') page: number) {
+    // Forced delay
+    await new Promise((r) => setTimeout(r, 1000));
+    return this.dogsService.findAll(take, page);
   }
 
   @Get(':id')
@@ -30,5 +34,10 @@ export class DogsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.dogsService.remove(+id);
+  }
+
+  @Post('seeds')
+  async seeds() {
+    return this.dogsService.seeds();
   }
 }
