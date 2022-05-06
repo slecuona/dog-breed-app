@@ -12,6 +12,7 @@
 ## Client
 
 - TypeScript
+- React
 - NextJS
 
 # Getting started
